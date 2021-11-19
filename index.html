@@ -1,0 +1,62 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <title> Subject Details</title>
+     <link rel="stylesheet" href="style.css">
+     <script src="https://unpkg.com/vue"></script>
+
+
+</head>
+
+<body>
+     <!---------------Home page------------------------>
+     <div id="app">
+
+          <header>
+               <div id="nav-bar">
+                    <div id="nav-header">
+                         <h1> Website</h1>
+                    </div>
+                    <div>
+                         <button type="button" v-on:click="showCheckout">
+                              <span>{{cartLessonCount}}</span> Checkout
+                         </button>
+                    </div>
+               </div>
+          </header>
+          <div v-if="showLessons">
+               <div v-for="lessons in lessons">
+                    <h1>{{lessons.subject}} </h1><!-- Get data from object-->
+                    <img id="img" v-bind:src="lessons.image">
+                    <p>Location: {{lessons.location}}</p><!-- Get data from object-->
+                    <p>Price: £{{lessons.price}}</p><!-- Get data from object-->
+                    <p>Capacity: {{lessons.capacity}}</p><!-- Get data from object-->
+                    <button type="button" v-on:click="addToCart(lessons)" v-if="canAddToCart(lessons)">Add To Cart</button>
+                    <button disabled="true" v-else>full</button>spaces: {{lessons.capacity - cartCount(lessons) }}</button>
+               </div>
+          </div>
+               <div v-else>
+                    <div id="form">
+                         <form @submit="validation" method="post">
+                         <h2>Order Form</h2>
+                         <p>First Name</p>
+                         <input v-model.trim="details.firstName" >
+                         <p>Phone Number</p>
+                         <input type="text" v-model="details.phoneNum">
+                         <button type="submit" >Buy Now</button>
+                         </form>
+                    </div>
+                    <div v-for="lessons in cart">
+                         <h1>{{lessons.subject}} </h1><!-- Get data from object-->
+                         <img id="img" v-bind:src="lessons.image">
+                         <p>Location: {{lessons.location}}</p><!-- Get data from object-->
+                         <p>Price: £{{lessons.price}}</p><!-- Get data from object-->
+                         <button id="Remove" type="button" v-on:click="removeFromCart(lessons)">Remove from Cart</button>
+               </div>
+     </div>
+
+</body>
+<script src="./courses.js"></script>
+<script src="./index.js"></script>
