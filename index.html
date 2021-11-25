@@ -39,14 +39,14 @@
           </div>
                <div v-else>
                     <div id="form">
-                         <form @submit="validation" method="post">
+                         
                          <h2>Order Form</h2>
                          <p>First Name</p>
                          <input v-model.trim="details.firstName" >
                          <p>Phone Number</p>
                          <input type="text" v-model="details.phoneNum">
-                         <button type="submit" >Buy Now</button>
-                         </form>
+                         <button type="button" v-on:click="validation()" >Buy Now</button>
+                         
                     </div>
                     <div v-for="lessons in cart">
                          <h1>{{lessons.subject}} </h1><!-- Get data from object-->
