@@ -76,7 +76,7 @@ let lessons = [
         subject: 'Sports',
         location: 'London',
         price: 100,
-        image: 'downloaded.png',
+        image: 'download.png',
         capacity: 5,    
     }
 ]
