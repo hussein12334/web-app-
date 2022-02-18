@@ -5,7 +5,7 @@
      <meta charset="UTF-8">
      <title> Subject Details</title>
      <link rel="stylesheet" href="style.css">
-     <script src="https://unpkg.com/vue"></script>
+     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 </head>
@@ -19,6 +19,11 @@
                     <div id="nav-header">
                          <h1> Website</h1>
                     </div>
+                    <div class="col-md-7">
+                        
+                         <input class="form-control" type="search" placeholder="Search" aria-label="Search" v-on:keyup="searchBar" v-model="search">
+                    
+                 </div>
                     <div>
                          <button type="button" v-on:click="showCheckout">
                               <span>{{cartLessonCount}}</span> Checkout
@@ -27,36 +32,43 @@
                </div>
           </header>
           <div v-if="showLessons">
+               <h2>Sort By:</h2>
+               <input name="attribute" value="subject" type="radio" @click="sortBySubject"><label>Subject</label><br>
                <div v-for="lessons in lessons">
                     <h1>{{lessons.subject}} </h1><!-- Get data from object-->
                     <img id="img" v-bind:src="lessons.image">
                     <p>Location: {{lessons.location}}</p><!-- Get data from object-->
                     <p>Price: £{{lessons.price}}</p><!-- Get data from object-->
                     <p>Capacity: {{lessons.capacity}}</p><!-- Get data from object-->
-                    <button type="button" v-on:click="addToCart(lessons)" v-if="canAddToCart(lessons)">Add To Cart</button>
-                    <button disabled="true" v-else>full</button>spaces: {{lessons.capacity - cartCount(lessons) }}</button>
+                    <button type="button" v-on:click="addToCart(lessons.id)" v-if="canAddToCart(lessons)">Add To Cart</button>
+                    <button disabled="true" v-else>full</button>spaces: {{lessons.capacity}}</button>
                </div>
           </div>
                <div v-else>
                     <div id="form">
-                         
+                         <form @submit="validation" method="post">
                          <h2>Order Form</h2>
                          <p>First Name</p>
                          <input v-model.trim="details.firstName" >
                          <p>Phone Number</p>
                          <input type="text" v-model="details.phoneNum">
-                         <button type="button" v-on:click="validation()" >Buy Now</button>
-                         
+                         <button type="submit" >Buy Now</button>
+                         </form>
                     </div>
-                    <div v-for="lessons in cart">
+                    <div v-for="item in cartIds">
+                    <div v-for="lessons in lessons">
+                         <span v-if="item.id === lessons.id && item.cartCounter >= 1">
                          <h1>{{lessons.subject}} </h1><!-- Get data from object-->
                          <img id="img" v-bind:src="lessons.image">
                          <p>Location: {{lessons.location}}</p><!-- Get data from object-->
                          <p>Price: £{{lessons.price}}</p><!-- Get data from object-->
-                         <button id="Remove" type="button" v-on:click="removeFromCart(lessons)">Remove from Cart</button>
-               </div>
+                         <p>Amount: {{item.cartCounter}}</p>
+                         <button id="Remove" type="button" v-on:click="removeFromCart(lessons.id)">Remove from Cart</button>
+                         </span>
+                     </div>
+                    </div>
      </div>
-
+     
 </body>
 <script src="./courses.js"></script>
 <script src="./index.js"></script>
