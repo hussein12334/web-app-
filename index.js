@@ -78,9 +78,12 @@ let app = new Vue({
         },
         removeFromCart(id) {
             const cartIndex = this.cart.indexOf(id);
+            const checkIndex = (this.checkOuts.indexOf(id) == this.cartIndex);
             const lessonsIndex = this.lessons.findIndex((obj => obj.id == id));
-            if (cartIndex > -1) {
+            //const checklessonIndex = this.lessons.findIndex((obj => obj.id == id));
+            if (cartIndex > -1 ) {
                 this.cart.splice(cartIndex, 1);
+                this.checkOuts.splice(checkIndex, 1);
                 this.lessons[lessonsIndex].capacity = this.lessons[lessonsIndex].capacity + 1;
             }
             if (this.cart.length === 0) {
